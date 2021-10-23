@@ -40,22 +40,32 @@ app.set("view engine", "hbs")
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
 
 app.get("/", (req,res,next) => {
+    
+    // Res.render para PUG y EJS
+    // res.render("index")
+
+    // Res.render para HBS
     res.render("ingresar")
 })
 
 app.post("/productos", (req,res,next) => {
     let data = req.body
     productos.push(new Producto(data.nombre, data.precio, data.urlFoto))
-    res.render("productos", { productos: productos })
+    
+    // Res.render para PUG y EJS
+    // res.render("productos", {productos})
+
+    // Res.render y res.redirect para HBS
+    res.render("ingresar")
+    res.redirect("productos")
 })
 
 app.get("/productos", (req,res,next) => {
     let hayProductos
     productos.length > 0 ? hayProductos = true : hayProductos = false
-    console.log(productos,"ACA")   
     
     // Res.render para PUG y EJS
-    //res.render("productos", {productos})
+    // res.render("productos", {productos})
 
     // Res.render para HBS
     res.render("productos", {hayProductos: hayProductos, productos: productos})
